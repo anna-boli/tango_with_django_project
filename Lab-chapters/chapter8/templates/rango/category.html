@@ -1,0 +1,32 @@
+<!-- the template is to be extended/inherited from rango/based.html -->
+{% extends 'rango/base.html' %}
+<!-- make use of static media -->
+{% load staticfiles %}
+
+{% block title_block %}
+         {% if category %}
+                     {{ category.name }}
+         {% else %}
+                     Unknown Category
+         {% endif %}
+{% endblock %}
+
+{% block body_block %}
+         {% if category %}	
+         <h1>{{ category.name }}</h1>
+         {% if pages %}
+         <ul>
+                     {% for page in pages %}
+	    <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+	    {% endfor %}
+         </ul>
+         {% else %}
+         <strong>No pages currently in category.</strong>
+         {% endif %}
+<!-- category.slug is passed through as a parameter to url template tag->produce correct URL -->
+         <a href="{% url 'rango:add_page' category.slug %}">Add Page</a> <br />
+         {% else %}
+         The specified category deos not exist.
+         {% endif %}
+{% endblock %}     
+    
